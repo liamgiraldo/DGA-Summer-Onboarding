@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool doubleJumpAvailable = false;
 
+    private bool isGroundPounding = false;
+    private float gpCooldown = 5f;
+    private float nextGp = 0f;
+
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -23,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Balloon balloon;
 
+    [SerializeField] private TMP_Text gpCooldownText;
+
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
@@ -32,12 +39,25 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
         }
 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f && !isGroundPounding)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
 
-        if(IsGrounded()){
+        if (Input.GetKey(KeyCode.LeftShift) && !IsGrounded() && !isGroundPounding && Time.time > nextGp)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, -jumpingPower);
+            nextGp = Time.time + gpCooldown;
+            isGroundPounding = true;
+        }
+
+        if (IsGrounded() && isGroundPounding)
+        {
+            doubleJumpAvailable = true;
+            isGroundPounding = false;
+            rb.SetRotation(0);
+        }
+        else if (IsGrounded()){
             doubleJumpAvailable = true;
             rb.SetRotation(0);
         }
@@ -45,6 +65,15 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetButtonDown("Jump") && !IsGrounded() && doubleJumpAvailable){
             rb.velocity = new Vector2(rb.velocity.x, doubleJumpFactor);
             doubleJumpAvailable = false;
+        }
+
+        if (Time.time < nextGp)
+        {
+            gpCooldownText.text = ((int)(nextGp - Time.time) + 1).ToString();
+        }
+        else
+        {
+            gpCooldownText.text = 0.ToString();
         }
 
         Flip();
