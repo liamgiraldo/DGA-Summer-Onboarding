@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private float gpCooldown = 5f;
     private float nextGp = 0f;
 
+    [SerializeField] public Animator animator;
+
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -33,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
+
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
 
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
