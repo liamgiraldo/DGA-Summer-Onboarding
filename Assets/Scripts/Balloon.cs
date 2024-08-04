@@ -87,6 +87,15 @@ public class Balloon : MonoBehaviour
             cooldowntime -= 1 * Time.deltaTime;
             cooldownTime.SetText(((int)cooldowntime).ToString());
         }
+
+        if (state == BalloonState.inactive)
+        {
+            isBalloonActive = false;
+        }
+        else
+        {
+            isBalloonActive = true;
+        }
     }
 
     void BalloonUpdate(){
