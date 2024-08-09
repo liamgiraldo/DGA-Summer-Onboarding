@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class Balloon : MonoBehaviour
 {
+    private AudioManager audioManager;
     //maximum width jiggle distance
     [SerializeField] private float wiggleBounds;
     [SerializeField] private float maxXScale;
@@ -46,6 +47,7 @@ public class Balloon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.audioManager = FindAnyObjectByType<AudioManager>();
         this.rb = GetComponent<Rigidbody2D>();
         this.time = carryTime;
         this.cooldowntime = 0;
@@ -62,10 +64,12 @@ public class Balloon : MonoBehaviour
             if(state == BalloonState.active){
                 state = BalloonState.inactive;
                 inflation = InflationState.deflating;
+                audioManager.Play("Deflate");
             }
             else if(state == BalloonState.inactive){
                 state = BalloonState.active;
                 inflation = InflationState.inflating;
+                audioManager.Play("Inflate");
             }
         }
 

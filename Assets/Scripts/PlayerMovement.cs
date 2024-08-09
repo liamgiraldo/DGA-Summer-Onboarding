@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private AudioManager audioManager;
     private float horizontal;
     private float speed = 8f;
     private float jumpingPower = 16f;
@@ -32,6 +33,10 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private TMP_Text gpCooldownText;
 
+    void Start(){
+        audioManager = FindAnyObjectByType<AudioManager>();
+    }
+
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
@@ -41,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            audioManager.Play("Jump");
         }
 
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f && !isGroundPounding)
@@ -68,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(Input.GetButtonDown("Jump") && !IsGrounded() && doubleJumpAvailable){
             rb.velocity = new Vector2(rb.velocity.x, doubleJumpFactor);
+            audioManager.Play("DoubleJump");
             doubleJumpAvailable = false;
         }
 
@@ -108,6 +115,18 @@ public class PlayerMovement : MonoBehaviour
         if(col.gameObject.CompareTag("Lethal")){
             GameManager.instance.isGameWon = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    public void playWalkSound(){
+        if(IsGrounded()){
+            audioManager.Play("Walk");
+        }
+    }
+
+    public void playWalkSound2(){
+        if(IsGrounded()){
+            audioManager.Play("Walk2");
         }
     }
 }
