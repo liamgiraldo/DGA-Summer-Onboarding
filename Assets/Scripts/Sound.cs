@@ -2,6 +2,19 @@
 using UnityEngine;
 
 [System.Serializable]
+
+
+
+/**
+
+CREDIT FOR THE AUDIO MANAGER GOES TO BRACKEYS!
+
+HE MADE THE AUDIO MANAGER! YOU CAN FIND IT HERE!
+https://old.brackeys.com/wp-content/FilesForDownload/AudioManager.zip
+
+thank u
+
+*/
 public class Sound {
 
 	public string name;

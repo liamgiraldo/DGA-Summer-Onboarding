@@ -2,6 +2,16 @@ using UnityEngine.Audio;
 using System;
 using UnityEngine;
 
+
+/**
+
+CREDIT AND ATTRIBUTION GOES TO BRACKEYS!
+THIS AUDIO MANAGER CAME FROM HIS CHANNEL!
+
+DOWNLOAD LINK IS HERE!
+https://old.brackeys.com/wp-content/FilesForDownload/AudioManager.zip
+
+*/
 public class AudioManager : MonoBehaviour
 {
 
