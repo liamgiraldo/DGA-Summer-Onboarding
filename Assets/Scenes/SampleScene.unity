@@ -360,6 +360,15 @@ MonoBehaviour:
     loop: 0
     mixerGroup: {fileID: 0}
     source: {fileID: 0}
+  - name: Walk2
+    clip: {fileID: 8300000, guid: 47a55f903b13d4cd08a92142f8655d06, type: 3}
+    volume: 0.5
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 0}
+    source: {fileID: 0}
   - name: Walk
     clip: {fileID: 8300000, guid: d9f91498ce4d14d84922f9acb4b41d1d, type: 3}
     volume: 0.5
